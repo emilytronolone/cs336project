@@ -9,4 +9,7 @@ CREATE TABLE `account`(
     PRIMARY KEY (`username`)
 );
 
-INSERT INTO `account` VALUES ('emily', 'emily', NULL);
+INSERT INTO `account` VALUES ('emily', 'emily', 'customer'),
+							 ('alyssa', 'password', 'customer'),
+							 ('admin1', 'admin', 'admin'),
+                             ('customRep1', 'customRep', 'customerRepresentative');

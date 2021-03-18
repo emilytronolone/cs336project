@@ -2,11 +2,12 @@
 <%
     String userid = request.getParameter("username");   
     String pwd = request.getParameter("password");
+    String accType = request.getParameter("type");
     Class.forName("com.mysql.jdbc.Driver");
     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shoeBay","root", "databases");
     Statement st = con.createStatement();
     ResultSet rs;
-    rs = st.executeQuery("select * from accounts where username=" + userid + " and password=" + pwd);
+    rs = st.executeQuery("select * from account where username='" + userid + "' and password='" + pwd+ "'and type='" + accType + "' ");
     if (rs.next()) {
         session.setAttribute("user", userid); // the username will be stored in the session
         out.println("welcome " + userid);
