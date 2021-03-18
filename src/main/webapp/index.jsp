@@ -6,6 +6,9 @@
 		<meta charset="UTF-8">
 		<title>Home</title>
 	</head>
+	<header>
+	<h1> Welcome to ShoeBay! </h1>
+	</header>
 	<body>
 		<button onclick="document.location='login.jsp'" type="button">Sign In</button>
 		<button onclick="document.location='register.jsp'" type="button">Register</button>

@@ -5,7 +5,9 @@
 	<head>
     	<title>Register Page</title>
 	</head>
-
+	<header>
+		<h1> Register </h1>
+	</header>
 	<body>
     	<div class="information">
         <form action="registerHandler.jsp" method="POST">  

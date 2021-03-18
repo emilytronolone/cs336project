@@ -5,11 +5,14 @@
    <head>
       <title>Login Form</title>
    </head>
+   <header>
+   	<h1> Login </h1>
+   </header>
    <body>
      <form action="checkLoginDetails.jsp" method="POST">
        Username: <input type="text" name="username"/> <br/>
        Password:<input type="password" name="password"/> <br/>
-       <input type="submit" value="Submit"/>
+       <input type="submit" value="Login"/>
      </form>
    </body>
 </html>
