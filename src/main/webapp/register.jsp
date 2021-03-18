@@ -10,7 +10,8 @@
 	</header>
 	<body>
     	<div class="information">
-        <form action="registerHandler.jsp" method="POST">  
+        <form action="registerAccountDetails.jsp" method="POST"> 
+         
             <label for="username">Create Username: </label>
             <input type="text" name="username" id="username" placeholder="Username"> <br>
     
