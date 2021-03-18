@@ -8,6 +8,6 @@
 	</head>
 	<body>
 		<button onclick="document.location='login.jsp'" type="button">Sign In</button>
-		<button type="button">Register</button>
+		<button onclick="document.location='register.jsp'" type="button">Register</button>
 	</body>
 </html>
