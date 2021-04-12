@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Home</title>
+		<title>Welcome Page</title>
 	</head>
 	<header>
 	<h1> Welcome to ShoeBay! </h1>

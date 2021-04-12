@@ -14,8 +14,11 @@
 	%>
 	Welcome <%=session.getAttribute("user")%>!
 
-	<button onclick="document.location='logout.jsp'" type="button">Log Out</button>
-
 	<%
 	    }
-	%>
+	%> 
+	<br/>
+	<button onclick="document.location='homePage.jsp'" type = "button">Go to Home Page</button>
+	<button onclick="document.location='logout.jsp'" type="button">Log Out</button>
+
+	
