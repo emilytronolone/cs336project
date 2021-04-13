@@ -27,7 +27,7 @@ CREATE TABLE `shoes`(
   PRIMARY KEY (`serialNumber`)
 );
 INSERT INTO `shoes` VALUES('1', '1.00', '1.00', '4', 'red', 'women', 'heels'),
-						  ('2', '1.00', '1.00', '5', 'yellow', 'children', 'sneakers')
+						  ('2', '1.00', '1.00', '5', 'yellow', 'children', 'sneakers'),s
                           ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
 
 DROP TABLE IF EXISTS `summarySalesReports`;
