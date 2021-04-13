@@ -20,13 +20,15 @@ CREATE TABLE `shoes`(
 	`serialNumber` INT,
   `biddingPrice` FLOAT,
   `buyItNowPrice` FLOAT,
-  `size` INT,
+  `size` FLOAT,
   `color` VARCHAR(10),
   `demographic` VARCHAR(5),
   `style` VARCHAR(15),
   PRIMARY KEY (`serialNumber`)
 );
-INSERT INTO `shoes` VALUES();
+INSERT INTO `shoes` VALUES('1', '1.00', '1.00', '4', 'red', 'women', 'heels'),
+						  ('2', '1.00', '1.00', '5', 'yellow', 'children', 'sneakers')
+                          ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
 
 DROP TABLE IF EXISTS `summarySalesReports`;
 CREATE TABLE `summarySalesReports`(
