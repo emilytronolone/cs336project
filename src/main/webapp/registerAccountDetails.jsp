@@ -3,7 +3,6 @@
 <!--Import some libraries that have classes that we need -->
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -17,7 +16,8 @@
 
 		//Get the database connection
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shoeBay", "root", "databases");
+	    ApplicationDB myDB = new ApplicationDB();
+	    Connection con = myDB.getConnection();
 		//Create a SQL statement
 		Statement stmt = con.createStatement();
 
