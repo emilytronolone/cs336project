@@ -11,6 +11,19 @@
        } else { %>
        
 		<%	
+		List<String> list = new ArrayList<String>();
+		
+		try {
+			//Get the database connection
+			ApplicationDB db = new ApplicationDB();	
+			Connection con = db.getConnection();	
+			
+			//Create a SQL statement
+			Statement stmt = con.createStatement();
+			//Get the combobox from the index.jsp
+			String entity = request.getParameter("price");
+		}
+		
 			ArrayList<String> paramList = new ArrayList<String>();
 			Map<String, String> searchParams = new HashMap<String, String>();
 			int index = 0;
