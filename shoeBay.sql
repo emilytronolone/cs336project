@@ -29,8 +29,13 @@ CREATE TABLE `shoes`(
 
 <<<<<<< HEAD
 INSERT INTO `shoes` VALUES('1', '1.00', '1.00', '4', 'red', 'women', 'heels'),
+<<<<<<< HEAD
 ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
 ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
+=======
+			  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
+              ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
+>>>>>>> ca4dd375bafcf36788c1a7330e29b3668ec4457c
 =======
 DROP TABLE IF EXISTS `auto bid`;
 CREATE TABLE `auto bid`(
