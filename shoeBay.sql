@@ -26,13 +26,20 @@ CREATE TABLE `shoes`(
   `style` VARCHAR(15),
   PRIMARY KEY (`serialNumber`)
 );
-<<<<<<< HEAD
+
+DROP TABLE IF EXISTS `auto bid`;
+CREATE TABLE `auto bid`(
+	`currBid` INT,
+    `highestBid` INT,
+    `serialNumber` INT,
+    `username` VARCHAR(50), 
+    foreign key (`serialNumber`) references `shoes`,
+    foreign key (`username`) references `account`,
+    PRIMARY KEY(`serialNumber`, `username`));
+    
+
 INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '4', 'red', 'women', 'heels'),
 						  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
-=======
-INSERT INTO `shoes` VALUES('1', '1.00', '1.00', '4', 'red', 'women', 'heels'),
-			  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
->>>>>>> a365a9498447c9a90c58a686d278d171d17bb9d4
                           ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
 
 DROP TABLE IF EXISTS `summarySalesReports`;

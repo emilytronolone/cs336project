@@ -1,10 +1,16 @@
 <%@ page import ="java.sql.*" %>
+<%@ page import="com.cs336.pkg.*"  %>
+
 <%
     String userid = request.getParameter("username");   
     String pwd = request.getParameter("password");
     String accType = request.getParameter("type");
     Class.forName("com.mysql.jdbc.Driver");
-    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shoeBay","root", "databases");
+    
+    ApplicationDB myDB = new ApplicationDB();
+    
+    Connection con = myDB.getConnection();
+    
     Statement st = con.createStatement();
     ResultSet rs;
     rs = st.executeQuery("select * from account where username='" + userid + "' and password='" + pwd+ "'and type='" + accType + "' ");
