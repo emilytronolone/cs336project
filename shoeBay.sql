@@ -15,11 +15,12 @@ INSERT INTO `account` VALUES ('emily', 'emily', 'customer'),
 							('customRep1', 'customRep', 'customerRepresentative');
                
 			
+			
 DROP TABLE IF EXISTS `shoes`;
 CREATE TABLE `shoes`(
 	`serialNumber` INT,
   `biddingPrice` FLOAT,
-  `buyItNowPrice` FLOAT,
+  `reserve` FLOAT,
   `size` FLOAT,
   `color` VARCHAR(10),
   `demographic` VARCHAR(5),
@@ -27,31 +28,39 @@ CREATE TABLE `shoes`(
   PRIMARY KEY (`serialNumber`)
 );
 
-<<<<<<< HEAD
-INSERT INTO `shoes` VALUES('1', '1.00', '1.00', '4', 'red', 'women', 'heels'),
-<<<<<<< HEAD
-('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
-('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
-=======
-			  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
-              ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
->>>>>>> ca4dd375bafcf36788c1a7330e29b3668ec4457c
-=======
-DROP TABLE IF EXISTS `auto bid`;
-CREATE TABLE `auto bid`(
+DROP TABLE IF EXISTS `bid`;
+CREATE TABLE `bid`(
+	`price` FLOAT,
+    `serialNumber` INT,
+    `username` VARCHAR(50),
+	foreign key (`serialNumber`) references `shoes`(`serialNumber`),
+    foreign key (`username`) references `account`(`username`)
+    );
+    
+DROP TABLE IF EXISTS `alerts`;
+CREATE TABLE `alerts`(
+`username` VARCHAR(50),
+`serialNumber` INT,
+`price` FLOAT
+);
+
+
+DROP TABLE IF EXISTS `autobid`;
+CREATE TABLE `autobid`(
 	`currBid` INT,
     `highestBid` INT,
+    `increment` INT,
     `serialNumber` INT,
     `username` VARCHAR(50), 
-    foreign key (`serialNumber`) references `shoes`,
-    foreign key (`username`) references `account`,
+    foreign key (`serialNumber`) references `shoes`(`serialNumber`),
+    foreign key (`username`) references `account`(`username`),
     PRIMARY KEY(`serialNumber`, `username`));
     
 
-INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '4', 'red', 'women', 'heels'),
-						  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
-                          ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
->>>>>>> 6a08620dc1b9f4f057c0f42205d40b88513cf321
+
+INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '1.00', '4', 'red', 'women', 'heels'),
+						  ('2', '1.00', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
+                          ('3', '1.00', '1.00', '1.00', '7', 'black', 'men', 'sandals');
 
 DROP TABLE IF EXISTS `summarySalesReports`;
 CREATE TABLE `summarySalesReports`(
