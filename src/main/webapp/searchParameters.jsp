@@ -1,5 +1,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*,java.text.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+<%@ page import="com.cs336.pkg.*"  %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,102 +23,82 @@
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
-			String entity = request.getParameter("price");
+			String entity = request.getParameter("size");
+			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
+			String str = "SELECT * FROM shoes WHERE size = " + entity;
+			
+			//Run the query against the database.
+			ResultSet result = stmt.executeQuery(str);
+			//Make an HTML table to show the results in:
+			out.print("<table>");
+
+			//make a row
+			out.print("<tr>");
+			//make a column
+			out.print("<td>");
+			//print out column header
+			out.print("Item");
+			out.print("</td>");
+			
+			out.print("<td>");
+			out.print("Serial Number");
+			out.print("</td>");
+			
+			//make a column
+			out.print("<td>");
+			out.print("Info");
+			out.print("</td>");
+			//make a column
+			out.print("<td>");
+			out.print("Bidding Price");
+			out.print("</td>");
+			
+			out.print("<td>");
+			out.print("Buy-It-Now Price");
+			out.print("</td>");
+			out.print("</tr>");
+
+			//parse out the results
+			while (result.next()) {
+				//make a row
+				out.print("<tr>");
+				//make a column
+				out.print("<td>");
+				
+				out.print("placeholder");
+				out.print("</td>");
+				out.print("<td>");
+				
+				out.print(result.getString("serialNumber"));
+				out.print("</td>");
+				out.print("<td>");
+				
+				out.print("Size: " + result.getString("size") + " ");
+				out.println("Color: " + result.getString("color")+ " ");
+				out.println("Demographic: "+ result.getString("demographic")+ " ");
+				out.println("Style: "+ result.getString("style")+ " ");
+				out.println("    ");
+				out.print("</td>");
+				out.print("<td>");
+				
+				out.print(result.getString("biddingPrice"));
+				out.print("</td>");
+				out.print("<td>");
+				
+				out.print(result.getString("buyItNowPrice"));
+				out.print("</td>");
+				out.print("</tr>");
+
+			}
+			out.print("</table>");
+
+			//close the connection.
+			con.close();
+
+		} catch (Exception e) {
 		}
 		
-			ArrayList<String> paramList = new ArrayList<String>();
-			Map<String, String> searchParams = new HashMap<String, String>();
-			int index = 0;
-			for (Enumeration<String> params = request.getParameterNames(); params.hasMoreElements();) {
-				//paramList.add(params.nextElement());
-				String paramName = params.nextElement();
-				String paramValue = request.getParameter(paramName);
-				if (!paramValue.isEmpty() && paramValue != null) {
-					paramList.add(paramName);
-					//System.out.println(paramList.get(index));
-					//System.out.println(paramValue);
-					if ((paramList.get(index)).equals("demographic")) {
-						String genderFixed = paramValue.replace("'", "\\'");
-						searchParams.put(paramList.get(index), genderFixed);
-					} else {				
-						searchParams.put(paramList.get(index), paramValue);
-					}
-					index++;
-				}
-			}
 			
-			Locale locale = new Locale("en", "US");
-			NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
-			
-			String url = "jdbc:mysql://localhost:3306/shoeBay";
-			Connection conn = null;
-			Statement s = null;
-			ResultSet rs = null;
-				
-			try {
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				conn = DriverManager.getConnection(url, "root", "databases");
-				
-					
-				StringBuilder searchQuery = new StringBuilder("SELECT * FROM shoes WHERE ");
-				String condition = null;
-				for (int i = 0; i < searchParams.size(); i++) {
-					// Check for numeric parameter so we can format the SQL query correctly
-					if ((paramList.get(i)).equals("size")) {
-						condition = paramList.get(i) + " LIKE " + searchParams.get(paramList.get(i));
-					} else if ((paramList.get(i)).equals("color")) {
-						condition = paramList.get(i) + " LIKE " + searchParams.get(paramList.get(i));
-					} else {
-						condition = paramList.get(i) + " LIKE " + searchParams.get(paramList.get(i));	
-					}
-					// Only want to include AND when we have more than one parameter
-					if (i == 0) {
-						searchQuery.append(condition);	
-					} else if (i > 0) {
-						searchQuery.append(" AND " + condition);
-					}	
-				}
-				//System.out.println(searchQuery);
-				s = conn.createStatement();
-				rs = s.executeQuery(searchQuery.toString());
-				if (rs.next()) { %>
-					<h2>Displaying search results:</h2>
-					<table>
-						<tr>
-							<th>Item</th>
-							<th>Seller</th>
-							<th>Current Bid</th>
-							<th>End Date/Time</th>
-						</tr>
-				<%	do { %>
-						<tr>
-							<td>
-								<a href="auction.jsp?productId=<%= rs.getInt("serialNumber") %>">
-									<%= rs.getString("size") + " " + rs.getString("color") + " " + rs.getString("demographic") +  " " + rs.getFloat("style") %>
-								</a>
-							</td>
-							<td><%= rs.getString("seller") %></td>
-							<td><%= currency.format(rs.getDouble("price")) %></td>
-							<td><%= rs.getString("endDate") %></td>
-						</tr>
-				<%	} while (rs.next()); %> 
-					</table>
-			<%	} else { %>
-					<h2>No results matching your search parameters.</h2>
-			<%	}		
-					
-			} catch(Exception e) { %>
-				<jsp:include page="search.jsp" flush="true"/>
-				<div class="content center">
-					<h1>Error: You must enter at least one search parameter.</h1>
-				</div>
-			<%	//User did not enter at least one search parameter
-			    e.printStackTrace();
-			} finally {
-			    try { rs.close(); } catch (Exception e) {}
-			    try { s.close(); } catch (Exception e) {}
-			    try { conn.close(); } catch (Exception e) {}
-			}
 		%>
 	
 	<% } %>
