@@ -10,6 +10,7 @@ CREATE TABLE `account`(
 );
 
 INSERT INTO `account` VALUES ('emily', 'emily', 'customer'),
+<<<<<<< HEAD
 							('alyssa', 'password', 'customer'),
 							('admin1', 'admin', 'admin'),
 							('customRep1', 'customRep', 'customerRepresentative');
@@ -17,6 +18,12 @@ INSERT INTO `account` VALUES ('emily', 'emily', 'customer'),
 SELECT * FROM account;
 			
 			
+=======
+							 ('alyssa', 'password', 'customer'),
+							 ('admin1', 'admin', 'admin'),
+							 ('customRep1', 'customRep', 'customerRepresentative');
+               
+>>>>>>> e8249a203e5a2a03074273eebb16a79b2cdd455d
 DROP TABLE IF EXISTS `shoes`;
 CREATE TABLE `shoes`(
 	`serialNumber` INT,
@@ -61,16 +68,19 @@ CREATE TABLE `autobid`(
     foreign key (`serialNumber`) references `shoes`(`serialNumber`),
     foreign key (`username`) references `account`(`username`),
     PRIMARY KEY(`serialNumber`, `username`));
+<<<<<<< HEAD
     
+=======
+>>>>>>> e8249a203e5a2a03074273eebb16a79b2cdd455d
 
 DROP TABLE IF EXISTS `summarySalesReports`;
 CREATE TABLE `summarySalesReports`(
 	`salesID` INT,
-  `totalEarnings` INT,
-  `items` INT,
-  `itemType` VARCHAR(50),
-  `endUser` VARCHAR(50),
-  PRIMARY KEY (`salesID`)
+	`totalEarnings` INT,
+	`items` INT,
+	`itemType` VARCHAR(50),
+	`endUser` VARCHAR(50),
+	PRIMARY KEY (`salesID`)
 );
 INSERT INTO `summarySalesReports` VALUES();
 
