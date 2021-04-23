@@ -27,5 +27,5 @@
 	</br>
     <li><a href="">Browse All Shoes</a></li> <!--  browse shoes -->
     <li><a href="search.jsp">Search Shoes</a></li>
-	<li><a href="">Create Auction</a></li>
+	<li><a href="createAuction.jsp">Create Auction</a></li>
 	<li><a href="">Check Alerts</a></li>

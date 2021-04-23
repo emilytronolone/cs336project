@@ -19,13 +19,14 @@ INSERT INTO `account` VALUES ('emily', 'emily', 'customer'),
 DROP TABLE IF EXISTS `shoes`;
 CREATE TABLE `shoes`(
 	`serialNumber` INT,
-  `biddingPrice` FLOAT,
-  `reserve` FLOAT,
-  `size` FLOAT,
-  `color` VARCHAR(10),
-  `demographic` VARCHAR(5),
-  `style` VARCHAR(15),
-  PRIMARY KEY (`serialNumber`)
+	`biddingPrice` FLOAT,
+	`reserve` FLOAT,
+	`size` FLOAT,
+	`color` VARCHAR(10),
+	`demographic` VARCHAR(5),
+	`style` VARCHAR(15),
+    `end` DATETIME,
+	PRIMARY KEY (`serialNumber`)
 );
 
 DROP TABLE IF EXISTS `bid`;
@@ -58,9 +59,9 @@ CREATE TABLE `autobid`(
     
 
 
-INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '1.00', '4', 'red', 'women', 'heels'),
-						  ('2', '1.00', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
-                          ('3', '1.00', '1.00', '1.00', '7', 'black', 'men', 'sandals');
+INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '4', 'red', 'women', 'heels'),
+						  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
+                          ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
 
 DROP TABLE IF EXISTS `summarySalesReports`;
 CREATE TABLE `summarySalesReports`(
