@@ -10,12 +10,10 @@ CREATE TABLE `account`(
 );
 
 INSERT INTO `account` VALUES ('emily', 'emily', 'customer'),
-							('alyssa', 'password', 'customer'),
-							('admin1', 'admin', 'admin'),
-							('customRep1', 'customRep', 'customerRepresentative');
+							 ('alyssa', 'password', 'customer'),
+							 ('admin1', 'admin', 'admin'),
+							 ('customRep1', 'customRep', 'customerRepresentative');
                
-			
-			
 DROP TABLE IF EXISTS `shoes`;
 CREATE TABLE `shoes`(
 	`serialNumber` INT,
@@ -28,6 +26,10 @@ CREATE TABLE `shoes`(
     `end` DATETIME,
 	PRIMARY KEY (`serialNumber`)
 );
+
+INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '4', 'red', 'women', 'heels', '1000-01-01 00:00:00'),
+						  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers', '1000-01-01 00:00:00'),
+                          ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals', '1000-01-01 00:00:00');
 
 DROP TABLE IF EXISTS `bid`;
 CREATE TABLE `bid`(
@@ -56,21 +58,15 @@ CREATE TABLE `autobid`(
     foreign key (`serialNumber`) references `shoes`(`serialNumber`),
     foreign key (`username`) references `account`(`username`),
     PRIMARY KEY(`serialNumber`, `username`));
-    
-
-
-INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '4', 'red', 'women', 'heels'),
-						  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers'),
-                          ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals');
 
 DROP TABLE IF EXISTS `summarySalesReports`;
 CREATE TABLE `summarySalesReports`(
 	`salesID` INT,
-  `totalEarnings` INT,
-  `items` INT,
-  `itemType` VARCHAR(50),
-  `endUser` VARCHAR(50),
-  PRIMARY KEY (`salesID`)
+	`totalEarnings` INT,
+	`items` INT,
+	`itemType` VARCHAR(50),
+	`endUser` VARCHAR(50),
+	PRIMARY KEY (`salesID`)
 );
 INSERT INTO `summarySalesReports` VALUES();
 
