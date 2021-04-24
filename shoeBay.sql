@@ -1,6 +1,11 @@
 CREATE DATABASE IF NOT EXISTS `shoeBay`;
 USE `shoeBay`;
 
+
+DROP TABLE IF EXISTS `bid`;
+DROP TABLE IF EXISTS `customerRepresentatives`;
+DROP TABLE IF EXISTS `autobid`;
+
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account`(
 	`username` VARCHAR(50),
@@ -13,7 +18,11 @@ INSERT INTO `account` VALUES ('emily', 'emily', 'customer'),
 							('alyssa', 'password', 'customer'),
 							('admin1', 'admin', 'admin'),
 							('customRep1', 'customRep', 'customerRepresentative');
+<<<<<<< HEAD
 
+=======
+							
+>>>>>>> ac206f674635be1623af9b4541413a8563d52c8e
 DROP TABLE IF EXISTS `shoes`;
 CREATE TABLE `shoes`(
 	`serialNumber` INT NOT NULL AUTO_INCREMENT,
@@ -28,11 +37,17 @@ CREATE TABLE `shoes`(
 );
 ALTER TABLE `shoes` AUTO_INCREMENT = 1;
 
+<<<<<<< HEAD
 INSERT INTO `shoes` (biddingPrice, reserve, size, color, demographic, style, endi) VALUES ('1.00', '1.00', '4', 'red', 'women', 'heels', '1000-01-01 00:00:00'),
 						  ('1.00', '1.00', '5', 'yellow', 'child', 'sneakers', '1000-01-01 00:00:00'),
                           ('1.00', '1.00', '7', 'black', 'men', 'sandals', '1000-01-01 00:00:00');
+=======
+INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '4', 'red', 'women', 'heels', '1000-01-01 00:00:00'),
+						  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers', '1000-01-01 00:00:00'),
+                          ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals', '1000-01-01 00:00:000');
+                          
+>>>>>>> ac206f674635be1623af9b4541413a8563d52c8e
 
-DROP TABLE IF EXISTS `bid`;
 CREATE TABLE `bid`(
 	`price` FLOAT,
     `serialNumber` INT,
@@ -48,7 +63,11 @@ CREATE TABLE `alerts`(
 `price` FLOAT
 );
 
+<<<<<<< HEAD
 DROP TABLE IF EXISTS `autobid`;
+=======
+
+>>>>>>> ac206f674635be1623af9b4541413a8563d52c8e
 CREATE TABLE `autobid`(
 	`currBid` INT,
     `highestBid` INT,
@@ -68,14 +87,18 @@ CREATE TABLE `summarySalesReports`(
 	`endUser` VARCHAR(50),
 	PRIMARY KEY (`salesID`)
 );
-INSERT INTO `summarySalesReports` VALUES();
 
-DROP TABLE IF EXISTS `customerRepresentatives`;
 CREATE TABLE `customerRepresentatives`(
 	`representativeID` INT,
 	`username` VARCHAR(50),
   `password` VARCHAR(128),
   PRIMARY KEY (`representativeID`),
+<<<<<<< HEAD
   FOREIGN KEY (`username`) REFERENCES `account` (`username`),
   FOREIGN KEY (`password`) REFERENCES `account` (`password`)
 );
+=======
+  FOREIGN KEY (`username`) REFERENCES `account` (`username`)
+);
+
+>>>>>>> ac206f674635be1623af9b4541413a8563d52c8e
