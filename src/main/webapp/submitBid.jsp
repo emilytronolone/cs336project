@@ -3,10 +3,17 @@
 <!--Import some libraries that have classes that we need -->
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
 
-<%
-
+	<%
 	try {
+
 		//Get the database connection
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();
@@ -15,33 +22,63 @@
 		Statement stmt = con.createStatement();
 		
 		//get parameters from the html form at bidPage
-		float highBid = request.getParameter("HighBid");
-		float currBid = request.getParamerter("CurrentBid");
-		float increment = request.getParamteter("increment");
-		String userID = request.getParameter("username");
-		float shoeID = request.getParameter("shoeID");
+		String highBid = request.getParameter("HighBid");
+		String currBid = request.getParameter("CurrentBid");
+		String incr = request.getParameter("increment");
+		Object userID = session.getAttribute("user");
+		String shoeID = request.getParameter("serialNumber");
 	
 		
 		//Make an insert statement for the accounts table:
-		String insert = "INSERT INTO autobid(currBid, highestBid, increment, username, serialNumber "
+		String insert = "INSERT INTO autobid(currBid, highestBid, increment, username, serialNumber) "
 				+ "VALUES (?, ?, ?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 
 		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-		ps.setFloat(1, currBid);
-		ps.setFloat(2, highBid);
-		ps.setFloat(3, increment);
-		ps.setString(4, userID);
-		ps.setFloat(5, shoeID);
+		ps.setString(1, currBid);
+		ps.setString(2, highBid);
+		ps.setString(3, incr);
+		ps.setObject(4, userID);
+		ps.setString(5, shoeID);
 		//Run set query against the DB
 		ps.executeUpdate();
 		
+		     Statement st = con.createStatement();
+    
+		//if the autobid already exists in the bid table, just update it, if not then create a bid for this 
+		ResultSet boo = st.executeQuery("SELECT * FROM bid WHERE user ='" + userID + "'AND serialNumber ='" + shoeID);
+		if (boo.next()) {
+			String update = "UPDATE bid SET price = ? WHERE user=" + userID + "AND serialNumber =" + shoeID;
+			PreparedStatement ps2 = con.prepareStatement(update);
+			
+			//add parameters
+			ps2.setString(1, currBid);
+			ps2.executeUpdate();
+		}
+		else {
+			String insert2 = "INSERT INTO bid(price, serialNumber, username) " 
+				+ "VALUES (? , ? , ?)";
+			PreparedStatement ps2 = con.prepareStatement(insert2);
+			
+			//add parameters to query
+			ps2.setString(1, currBid);
+			ps2.setString(2, shoeID);
+			ps2.setObject(3, userID);
+			ps2.executeUpdate();
+			
+		}
+		
+		//check the bid table for higher bids to make alerts 
+		String getLowerBids = "SELECT * FROM bid WHERE "
+		
+				
 		//close the connection
 		con.close();
+		out.print("Autobid successfully posted!");
 		
 	} catch (Exception ex) {
 		out.print(ex);
 		out.print("Insert failed :()");
 	}
-	 
+	
