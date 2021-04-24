@@ -10,36 +10,27 @@ CREATE TABLE `account`(
 );
 
 INSERT INTO `account` VALUES ('emily', 'emily', 'customer'),
-<<<<<<< HEAD
 							('alyssa', 'password', 'customer'),
 							('admin1', 'admin', 'admin'),
 							('customRep1', 'customRep', 'customerRepresentative');
 
-SELECT * FROM account;
-			
-			
-=======
-							 ('alyssa', 'password', 'customer'),
-							 ('admin1', 'admin', 'admin'),
-							 ('customRep1', 'customRep', 'customerRepresentative');
-               
->>>>>>> e8249a203e5a2a03074273eebb16a79b2cdd455d
 DROP TABLE IF EXISTS `shoes`;
 CREATE TABLE `shoes`(
-	`serialNumber` INT,
+	`serialNumber` INT NOT NULL AUTO_INCREMENT,
 	`biddingPrice` FLOAT,
 	`reserve` FLOAT,
 	`size` FLOAT,
 	`color` VARCHAR(10),
 	`demographic` VARCHAR(5),
 	`style` VARCHAR(15),
-    `end` DATETIME,
+    `endi` DATETIME,
 	PRIMARY KEY (`serialNumber`)
 );
+ALTER TABLE `shoes` AUTO_INCREMENT = 1;
 
-INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '4', 'red', 'women', 'heels', '1000-01-01 00:00:00'),
-						  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers', '1000-01-01 00:00:00'),
-                          ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals', '1000-01-01 00:00:00');
+INSERT INTO `shoes` (biddingPrice, reserve, size, color, demographic, style, endi) VALUES ('1.00', '1.00', '4', 'red', 'women', 'heels', '1000-01-01 00:00:00'),
+						  ('1.00', '1.00', '5', 'yellow', 'child', 'sneakers', '1000-01-01 00:00:00'),
+                          ('1.00', '1.00', '7', 'black', 'men', 'sandals', '1000-01-01 00:00:00');
 
 DROP TABLE IF EXISTS `bid`;
 CREATE TABLE `bid`(
@@ -57,7 +48,6 @@ CREATE TABLE `alerts`(
 `price` FLOAT
 );
 
-
 DROP TABLE IF EXISTS `autobid`;
 CREATE TABLE `autobid`(
 	`currBid` INT,
@@ -68,10 +58,6 @@ CREATE TABLE `autobid`(
     foreign key (`serialNumber`) references `shoes`(`serialNumber`),
     foreign key (`username`) references `account`(`username`),
     PRIMARY KEY(`serialNumber`, `username`));
-<<<<<<< HEAD
-    
-=======
->>>>>>> e8249a203e5a2a03074273eebb16a79b2cdd455d
 
 DROP TABLE IF EXISTS `summarySalesReports`;
 CREATE TABLE `summarySalesReports`(
@@ -93,4 +79,3 @@ CREATE TABLE `customerRepresentatives`(
   FOREIGN KEY (`username`) REFERENCES `account` (`username`),
   FOREIGN KEY (`password`) REFERENCES `account` (`password`)
 );
-

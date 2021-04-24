@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>Create Auction</title>
 	</head>
 	<body>
 
@@ -29,19 +29,19 @@
 		//String newEndDate = request.getParameter("end");
 		
 		//Make an insert statement for the accounts table:
-		String insert = "INSERT INTO shoes(serialNumber, biddingPrice, reserve, size, color, demographic, style)"
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO shoes(biddingPrice, reserve, size, color, demographic, style)"
+				+ "VALUES (?, ?, ?, ?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 
 		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-		ps.setString(1, "4");
-		ps.setString(2, "0");
-		ps.setString(3, newReserve);
-		ps.setString(4, newSize);
-		ps.setString(5, newColor);
-		ps.setString(6, newDemo);
-		ps.setString(7, newStyle);
+		//ps.setString(1, "4");
+		ps.setString(1, "0");
+		ps.setString(2, newReserve);
+		ps.setString(3, newSize);
+		ps.setString(4, newColor);
+		ps.setString(5, newDemo);
+		ps.setString(6, newStyle);
 		//Run the query against the DB
 		ps.executeUpdate();
 		//Run the query against the DB
@@ -55,12 +55,12 @@
 		
 	} catch (Exception ex) {
 		out.print(ex);
-		out.print("insert failed");
+		out.print("Error");
 	}
 %>
 
 
-<!-- <button onclick="document.location='login.jsp'" type="button">Log in</button> -->
+		<button onclick="document.location='homePage.jsp'" type="button">Back to Home</button>
 
 
 

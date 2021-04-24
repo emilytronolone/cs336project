@@ -29,4 +29,4 @@
     <li><a href="search.jsp">Search Shoes</a></li>
 	<li><a href="createAuction.jsp">Create Auction</a></li>
 	<li><a href="">Check Alerts</a></li>
-	<li><a href="bidPage.jsp">Make A Bid</a></li>
+	<li><a href="bidOptions.jsp">Make A Bid</a></li>
