@@ -4,11 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Search Shoes</title>
+<title>Wish List</title>
 </head>
 <body>
-    		<h2>Please select at least one category below: </h2>
-			<form action="searchParameters.jsp" method="GET">
+
+<h1> Add an item to your wish list!</h1>
+<h3> You will get an alert when this item becomes available!</h3>
+    		<h2>Please complete the categories below: </h2>
+			<form action="wishlistParameters.jsp" method="GET">
 			
 				<label for="size">Size</label>
 				<select name="size" id="size">
@@ -73,12 +76,11 @@
 				</select> <br>				
 				
 				
-				<input type="submit" value="Search">
+				<input type="submit" value="Submit">
 			</form>      
 
 
-<br/>
-	<button onclick="document.location='homePage.jsp'" type = "button">Go to Home Page</button>
+
 
 </body>
 </html>

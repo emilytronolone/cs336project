@@ -38,7 +38,7 @@
 			<h2>Search Results:</h2>
 			<table>
 				<tr>
-					<th>Item</th>
+					<th>Item Number</th>
 					<th>Size</th>
 					<th>Color</th>
 					<th>Demographic</th>
@@ -71,5 +71,14 @@
 		%>
 	
 	<% } %>
+	</br>
+	Don't see the item you want? Add it to your wish list! 
+	<br/>
+	<button onclick="document.location='wishlist.jsp'" type = "button">Add to Wish List</button>
+	
+	<br/>
+	<button onclick="document.location='homePage.jsp'" type = "button">Go to Home Page</button>
 </body>
+
+
 </html>
