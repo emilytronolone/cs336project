@@ -1,6 +1,11 @@
 CREATE DATABASE IF NOT EXISTS `shoeBay`;
 USE `shoeBay`;
 
+
+DROP TABLE IF EXISTS `bid`;
+DROP TABLE IF EXISTS `customerRepresentatives`;
+DROP TABLE IF EXISTS `autobid`;
+
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account`(
 	`username` VARCHAR(50),
@@ -10,20 +15,10 @@ CREATE TABLE `account`(
 );
 
 INSERT INTO `account` VALUES ('emily', 'emily', 'customer'),
-<<<<<<< HEAD
 							('alyssa', 'password', 'customer'),
 							('admin1', 'admin', 'admin'),
 							('customRep1', 'customRep', 'customerRepresentative');
-
-SELECT * FROM account;
-			
-			
-=======
-							 ('alyssa', 'password', 'customer'),
-							 ('admin1', 'admin', 'admin'),
-							 ('customRep1', 'customRep', 'customerRepresentative');
-               
->>>>>>> e8249a203e5a2a03074273eebb16a79b2cdd455d
+							
 DROP TABLE IF EXISTS `shoes`;
 CREATE TABLE `shoes`(
 	`serialNumber` INT,
@@ -39,9 +34,9 @@ CREATE TABLE `shoes`(
 
 INSERT INTO `shoes` VALUES ('1', '1.00', '1.00', '4', 'red', 'women', 'heels', '1000-01-01 00:00:00'),
 						  ('2', '1.00', '1.00', '5', 'yellow', 'child', 'sneakers', '1000-01-01 00:00:00'),
-                          ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals', '1000-01-01 00:00:00');
+                          ('3', '1.00', '1.00', '7', 'black', 'men', 'sandals', '1000-01-01 00:00:000');
+                          
 
-DROP TABLE IF EXISTS `bid`;
 CREATE TABLE `bid`(
 	`price` FLOAT,
     `serialNumber` INT,
@@ -58,7 +53,6 @@ CREATE TABLE `alerts`(
 );
 
 
-DROP TABLE IF EXISTS `autobid`;
 CREATE TABLE `autobid`(
 	`currBid` INT,
     `highestBid` INT,
@@ -68,10 +62,6 @@ CREATE TABLE `autobid`(
     foreign key (`serialNumber`) references `shoes`(`serialNumber`),
     foreign key (`username`) references `account`(`username`),
     PRIMARY KEY(`serialNumber`, `username`));
-<<<<<<< HEAD
-    
-=======
->>>>>>> e8249a203e5a2a03074273eebb16a79b2cdd455d
 
 DROP TABLE IF EXISTS `summarySalesReports`;
 CREATE TABLE `summarySalesReports`(
@@ -82,15 +72,12 @@ CREATE TABLE `summarySalesReports`(
 	`endUser` VARCHAR(50),
 	PRIMARY KEY (`salesID`)
 );
-INSERT INTO `summarySalesReports` VALUES();
 
-DROP TABLE IF EXISTS `customerRepresentatives`;
 CREATE TABLE `customerRepresentatives`(
 	`representativeID` INT,
 	`username` VARCHAR(50),
   `password` VARCHAR(128),
   PRIMARY KEY (`representativeID`),
-  FOREIGN KEY (`username`) REFERENCES `account` (`username`),
-  FOREIGN KEY (`password`) REFERENCES `account` (`password`)
+  FOREIGN KEY (`username`) REFERENCES `account` (`username`)
 );
 
