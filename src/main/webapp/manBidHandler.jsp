@@ -67,7 +67,7 @@
 			ps2.executeUpdate();
 		}
 				
-		//check for other autobids against this item
+		//check for other bids against this item
 		ResultSet boo2 = stmt.executeQuery("SELECT * FROM bid WHERE username= '" + userID + "' AND serialNumber = '" + newNum + "'");
 		if (boo2.next()) {
 			String update = "UPDATE bid SET price = ? WHERE username= '" + userID + "' AND serialNumber = '" + newNum + "'";
@@ -79,10 +79,10 @@
 		}
 		
 		//response.sendRedirect("login.jsp");
-
+	
 		
 		
-		//check for autobids
+		//check for autobids against this item
 		ResultSet autos = stmt.executeQuery("SELECT * FROM autobid WHERE serialNumber = '" + newNum + "'");
 		//if there is an autobid for this item
 		if(autos.next()){
@@ -130,6 +130,12 @@
 			}
 			
 		}
+		
+		//update shoe table to reflect new price of product
+		String updateShoes = "UPDATE shoes SET biddingPrice = ? WHERE serialNumber = '" + newNum + "'";
+		PreparedStatement ps5 = con.prepareStatement(updateShoes);
+		ps5.setString(1, newBid);
+		ps5.executeUpdate();
 	
 
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
