@@ -99,23 +99,42 @@
 			//set the highest bid to the current price 
 			int ans = 0;
 			String bidder2Name = boo2.getString("username");
+			String winner = "";
+			String newprice = "";
 			
+			//if the other bidder has a higher high-price then set the original player's bid to other's high price 
 			if (no > no2){
 				String update = "UPDATE bid SET price = ? WHERE username= '" + bidder2Name + "' AND serialNumber = '" + shoeID + "'";
 				PreparedStatement ps2 = con.prepareStatement(update);
+				newprice = no2+"";
 				//add parameters
-				ps2.setString(1, boo2.getString("highestBid"));
+				ps2.setString(1, newprice);
 				ps2.executeUpdate();
+				winner = bidder2Name;
 				ans = no;
+				//if original bidder has higher bid then set winner to the original bidder
 			}else{
 				String update = "UPDATE bid SET price = ? WHERE username= '" + userID + "' AND serialNumber = '" + shoeID + "'";
+				newprice = no+"";
 				PreparedStatement ps2 = con.prepareStatement(update);
 				//add parameters
-				ps2.setString(1, highBid);
+				ps2.setString(1, newprice);
 				ps2.executeUpdate();
-				ans = no2;
+				ans = no;
+				winner = userID.toString();
+			
 				
 			}
+			
+			//update the shoe table 
+			String updateShoes = "UPDATE shoes SET biddingPrie = ? WHERE serialNumber = '" + shoeID + "'";
+			PreparedStatement ps5 = con.prepareStatement(updateShoes);
+			ps5.setString(1, newprice);
+			ps5.executeUpdate();
+			
+			
+			
+			
 			
 			//check the bid table for lower bids  
 			String getlow = "SELECT username FROM bid WHERE serialNumber = '" + shoeID + "' AND price < '" + ans + "'";
