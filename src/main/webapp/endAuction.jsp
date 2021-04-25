@@ -25,7 +25,30 @@
     	//if the endauction time has passed
     	if (endauction gt nowTime) {
 			//check to see who won the auction
-    		ResultSet boo = stmt.executeQuery("SELECT MAX * FROM bid WHERE serialNumber = '" + number + "'"); 
+    		ResultSet boo = stmt.executeQuery("SELECT * FROM bid WHERE price = (SELECT MAX price FROM bid WHERE serialNumber = '" + number + "')");
+			
+			boo.next();
+			String winner = boo.getString("username");
+			String finalCost = boo.getString("price");
+			
+			
+			//alert the winner that they have won the auction
+			String alertWinner = "INSERT INTO alerts(username, serialNumber, price, alertType) " 
+					+ "VALUES (? , ? , ?, ?)";
+			
+			PreparedStatement ps3 = con.prepareStatement(insert2);
+			//add parameters to query
+			ps3.setString(1, winner);
+			ps3.setString(2, newNum);
+			ps3.setObject(3, number);
+			ps3.setString(4, "You have won the auction!");
+			ps3.executeUpdate();
+			
+			
+			//delete the auction from the shoes table
+			String deleteAuction = "DELETE FROM shoes WHERE serialNumber = '" + number + "'";
+			stmt.executeQuery(deleteAuction);
+			
 			
     	}
 			
