@@ -50,7 +50,9 @@ DROP TABLE IF EXISTS `alerts`;
 CREATE TABLE `alerts`(
 	`username` VARCHAR(50),
 	`serialNumber` INT,
-	`price` FLOAT
+	`price` FLOAT,
+    foreign key (`serialNumber`) references `shoes`(`serialNumber`),
+    foreign key (`username`) references `account`(`username`)
 );
 
 DROP TABLE IF EXISTS `autobid`;
