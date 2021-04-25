@@ -127,7 +127,7 @@
 			}
 			
 			//update the shoe table 
-			String updateShoes = "UPDATE shoes SET biddingPrie = ? WHERE serialNumber = '" + shoeID + "'";
+			String updateShoes = "UPDATE shoes SET biddingPrice = ? WHERE serialNumber = '" + shoeID + "'";
 			PreparedStatement ps5 = con.prepareStatement(updateShoes);
 			ps5.setString(1, newprice);
 			ps5.executeUpdate();
