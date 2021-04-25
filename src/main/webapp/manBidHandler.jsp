@@ -38,8 +38,35 @@
 		ps.setObject(3, userID);
 		//Run the query against the DB
 		ps.executeUpdate();
-		//Run the query against the DB
 		
+		//check the bid table for lower bids  
+		String getLowerBids = "SELECT username FROM bid WHERE serialNumber = '" + newNum + "' AND price < '" + newBid + "'";
+		ResultSet lowBids = stmt.executeQuery(getLowerBids);
+				
+		// create alerts to let lower bidders know they've been outbid 
+		while(lowBids.next()){
+			String s = lowBids.getString("username");
+			
+			String insert2 = "INSERT INTO alerts(username, serialNumber, price) " 
+					+ "VALUES (? , ? , ?)";
+				PreparedStatement ps2 = con.prepareStatement(insert2);
+				//add parameters to query
+				ps2.setString(1, s);
+				ps2.setString(2, newNum);
+				ps2.setObject(3, newBid);
+				ps2.executeUpdate();
+		}
+				
+		//check for other autobids against this item
+		ResultSet boo = stmt.executeQuery("SELECT * FROM bid WHERE username= '" + userID + "' AND serialNumber = '" + newNum + "'");
+		if (boo.next()) {
+			String update = "UPDATE bid SET price = ? WHERE username= '" + userID + "' AND serialNumber = '" + newNum + "'";
+			PreparedStatement ps2 = con.prepareStatement(update);
+			
+			//add parameters
+			ps2.setString(1, newBid);
+			ps2.executeUpdate();
+		}
 		
 		//response.sendRedirect("login.jsp");
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.

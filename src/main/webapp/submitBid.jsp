@@ -114,4 +114,4 @@
 	}
 	
 	%>
-	
+	<button onclick="document.location='homePage.jsp'" type="button">Back to Home</button>
