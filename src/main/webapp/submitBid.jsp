@@ -29,7 +29,7 @@
 		String shoeID = request.getParameter("serialNumber");
 	
 		
-		//Make an insert statement for the accounts table:
+		//Make an insert statement for the autobid table:
 		String insert = "INSERT INTO autobid(currBid, highestBid, increment, username, serialNumber) "
 				+ "VALUES (?, ?, ?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
@@ -44,12 +44,11 @@
 		//Run set query against the DB
 		ps.executeUpdate();
 		
-		     Statement st = con.createStatement();
     
 		//if the autobid already exists in the bid table, just update it, if not then create a bid for this 
-		ResultSet boo = st.executeQuery("SELECT * FROM bid WHERE user ='" + userID + "'AND serialNumber ='" + shoeID);
+		ResultSet boo = stmt.executeQuery("SELECT * FROM bid WHERE username= '" + userID + "' AND serialNumber = '" + shoeID + "'");
 		if (boo.next()) {
-			String update = "UPDATE bid SET price = ? WHERE user=" + userID + "AND serialNumber =" + shoeID;
+			String update = "UPDATE bid SET price = ? WHERE username= '" + userID + "' AND serialNumber = '" + shoeID + "'";
 			PreparedStatement ps2 = con.prepareStatement(update);
 			
 			//add parameters
@@ -57,20 +56,52 @@
 			ps2.executeUpdate();
 		}
 		else {
+			
 			String insert2 = "INSERT INTO bid(price, serialNumber, username) " 
 				+ "VALUES (? , ? , ?)";
+			
 			PreparedStatement ps2 = con.prepareStatement(insert2);
 			
 			//add parameters to query
 			ps2.setString(1, currBid);
 			ps2.setString(2, shoeID);
 			ps2.setObject(3, userID);
+			
 			ps2.executeUpdate();
 			
 		}
 		
-		//check the bid table for higher bids to make alerts 
-		String getLowerBids = "SELECT * FROM bid WHERE "
+		//check the bid table for lower bids  
+		String getLowerBids = "SELECT username FROM bid WHERE serialNumber = '" + shoeID + "' AND price < '" + currBid + "'";
+		ResultSet lowBids = stmt.executeQuery(getLowerBids);
+				
+		// create alerts to let lower bidders know they've been outbid 
+		while(lowBids.next()){
+			String s = lowBids.getString("username");
+			
+			String insert2 = "INSERT INTO alerts(username, serialNumber, price) " 
+					+ "VALUES (? , ? , ?)";
+				PreparedStatement ps2 = con.prepareStatement(insert2);
+				//add parameters to query
+				ps2.setString(1, s);
+				ps2.setString(2, shoeID);
+				ps2.setObject(3, currBid);
+				ps2.executeUpdate();
+		}
+		
+		//check for other autobids against this item
+		ResultSet boo = stmt.executeQuery("SELECT * FROM bid WHERE username= '" + userID + "' AND serialNumber = '" + shoeID + "'");
+		if (boo.next()) {
+			String update = "UPDATE bid SET price = ? WHERE username= '" + userID + "' AND serialNumber = '" + shoeID + "'";
+			PreparedStatement ps2 = con.prepareStatement(update);
+			
+			//add parameters
+			ps2.setString(1, currBid);
+			ps2.executeUpdate();
+		}
+		
+		
+		
 		
 				
 		//close the connection
@@ -81,4 +112,6 @@
 		out.print(ex);
 		out.print("Insert failed :()");
 	}
+	
+	%>
 	
