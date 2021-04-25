@@ -79,30 +79,87 @@
 		while(lowBids.next()){
 			String s = lowBids.getString("username");
 			
-			String insert2 = "INSERT INTO alerts(username, serialNumber, price) " 
-					+ "VALUES (? , ? , ?)";
+			String insert2 = "INSERT INTO alerts(username, serialNumber, price, alertType) " 
+					+ "VALUES (? , ? , ?, ?)";
 				PreparedStatement ps2 = con.prepareStatement(insert2);
 				//add parameters to query
 				ps2.setString(1, s);
 				ps2.setString(2, shoeID);
 				ps2.setObject(3, currBid);
+				ps2.setString(4, "You have been outbid!");
 				ps2.executeUpdate();
 		}
 		
-		//check for other autobids against this item
-		ResultSet boo = stmt.executeQuery("SELECT * FROM bid WHERE username= '" + userID + "' AND serialNumber = '" + shoeID + "'");
-		if (boo.next()) {
-			String update = "UPDATE bid SET price = ? WHERE username= '" + userID + "' AND serialNumber = '" + shoeID + "'";
-			PreparedStatement ps2 = con.prepareStatement(update);
+		//check for other autobids against this item and if there is one then set it to the highest of the 2 autobid highs in order to prevent 2 robots from fighitn eachother 
+		ResultSet boo2 = stmt.executeQuery("SELECT * FROM autobid WHERE serialNumber = '" + shoeID + "' AND NOT username = '" + userID +"'");
+				
+		if (boo2.next()) {
+			int no = Integer.parseInt(boo2.getString("highestBid"));
+			int no2 = Integer.parseInt(highBid);
+			//set the highest bid to the current price 
+			int ans = 0;
+			String bidder2Name = boo2.getString("username");
+			String winner = "";
+			String newprice = "";
 			
-			//add parameters
-			ps2.setString(1, currBid);
-			ps2.executeUpdate();
+			//if the other bidder has a higher high-price then set the original player's bid to other's high price 
+			if (no > no2){
+				String update = "UPDATE bid SET price = ? WHERE username= '" + bidder2Name + "' AND serialNumber = '" + shoeID + "'";
+				PreparedStatement ps2 = con.prepareStatement(update);
+				newprice = no2+"";
+				//add parameters
+				ps2.setString(1, newprice);
+				ps2.executeUpdate();
+				winner = bidder2Name;
+				ans = no;
+				//if original bidder has higher bid then set winner to the original bidder
+			}else{
+				String update = "UPDATE bid SET price = ? WHERE username= '" + userID + "' AND serialNumber = '" + shoeID + "'";
+				newprice = no+"";
+				PreparedStatement ps2 = con.prepareStatement(update);
+				//add parameters
+				ps2.setString(1, newprice);
+				ps2.executeUpdate();
+				ans = no;
+				winner = userID.toString();
+			
+				
+			}
+			
+			//update the shoe table 
+			String updateShoes = "UPDATE shoes SET biddingPrie = ? WHERE serialNumber = '" + shoeID + "'";
+			PreparedStatement ps5 = con.prepareStatement(updateShoes);
+			ps5.setString(1, newprice);
+			ps5.executeUpdate();
+			
+			
+			
+			
+			
+			//check the bid table for lower bids  
+			String getlow = "SELECT username FROM bid WHERE serialNumber = '" + shoeID + "' AND price < '" + ans + "'";
+			ResultSet lowBids2 = stmt.executeQuery(getlow);
+			// create alerts to let lower bidders know they've been outbid 
+			while(lowBids2.next()){
+				String s = lowBids2.getString("username");
+				
+				String insert2 = "INSERT INTO alerts(username, serialNumber, price, alertType) " 
+						+ "VALUES (? , ? , ?, ?)";
+					PreparedStatement ps2 = con.prepareStatement(insert2);
+					//add parameters to query
+					ps2.setString(1, s);
+					ps2.setString(2, shoeID);
+					ps2.setObject(3, ans);
+					ps2.setString(4, "You have been outbid!");
+					ps2.executeUpdate();
+			}
+		
+			
 		}
+				
+
 		
-		
-		
-		
+	
 				
 		//close the connection
 		con.close();
