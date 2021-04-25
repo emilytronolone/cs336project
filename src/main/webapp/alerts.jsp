@@ -21,18 +21,52 @@
 			Connection con = db.getConnection();	
 			
 			//Create a SQL statement
-			Statement stmt = con.createStatement();
-			//Get the combobox from the index.jsp
-			
-			//String searchSize = request.getParameter("size");
-			//String searchColor = request.getParameter("color");
-			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp			
+			Statement st = con.createStatement();
+
+		    //get all instances of shoe auctions that have ended
+		    ResultSet rs = st.executeQuery("SELECT * FROM shoes WHERE DATEDIFF(CURRENT_TIMESTAMP, endi) > 0");
+		    while(rs.next()){
+		    	String endauction = rs.getString("endi");
+		    	String number = rs.getString("serialNumber");
+		    	
+				//check to see who won the auction
+	    		ResultSet boo = st.executeQuery("SELECT * FROM bid WHERE price = (SELECT MAX price FROM bid WHERE serialNumber = '" + number + "')");
+				
+				boo.next();
+				String winner = boo.getString("username");
+				String finalCost = boo.getString("price");
+				
+				//check to see if reserve price was met 
+				ResultSet reservePrice = st.executeQuery("SELECT * FROM shoes WHERE serialNumber = '" + number + "'");
+				reservePrice.next();
+				String reserve = reservePrice.getString("reserve");
+				int res = Integer.parseInt(reserve);
+				int fin = Integer.parseInt(finalCost);
+				
+				if (res<fin){
+					//alert the winner of the auction if the reserve price was met otherwise move on
+					String alertWinner = "INSERT INTO alerts(username, serialNumber, price, alertType) " 
+							+ "VALUES (? , ? , ?, ?)";
+					
+					PreparedStatement ps3 = con.prepareStatement(alertWinner);
+					//add parameters to query
+					ps3.setString(1, winner);
+					ps3.setString(2, number);
+					ps3.setObject(3, finalCost);
+					ps3.setString(4, "You have won the auction!");
+					ps3.executeUpdate();
+					
+					
+					//delete the auction from the shoes table
+					String deleteAuction = "DELETE FROM shoes WHERE serialNumber = '" + number + "'";
+					st.executeQuery(deleteAuction);
+				}	
+		    }
 			
 			Object userID = session.getAttribute("user");
 			String str = "SELECT * FROM alerts WHERE username= '" + userID + "'"; 
-			
 			//Run the query against the database.
-			ResultSet result = stmt.executeQuery(str);
+			ResultSet result = st.executeQuery(str);
 	
 			if (result.next()) { %>
 			<h2>Your alerts:</h2>
