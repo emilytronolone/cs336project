@@ -12,46 +12,46 @@
     Statement st = con.createStatement();
     ResultSet rs;
     
-    
-    ResultSet now = st.executeQuery("SELECT NOW()");
-    String nowTime = now.toString();
-    
-    //pull the data pertaining to the active auctions 
-    rs = st.executeQuery("select * from shoes");
+    //get all instances of shoe auctions that have ended
+    rs = st.executeQuery("SELECT * FROM shoes WHERE DATEDIFF(CURRENT_TIMESTAMP, endi) > 0");
     while(rs.next()){
     	String endauction = rs.getString("endi");
     	String number = rs.getString("serialNumber");
     	
-    	//if the endauction time has passed
-    	if (endauction gt nowTime) {
+    	
 			//check to see who won the auction
-    		ResultSet boo = stmt.executeQuery("SELECT * FROM bid WHERE price = (SELECT MAX price FROM bid WHERE serialNumber = '" + number + "')");
+    		ResultSet boo = st.executeQuery("SELECT * FROM bid WHERE price = (SELECT MAX price FROM bid WHERE serialNumber = '" + number + "')");
 			
 			boo.next();
 			String winner = boo.getString("username");
 			String finalCost = boo.getString("price");
 			
+			//check to see if reserve price was met 
+			ResultSet reservePrice = st.executeQuery("SELECT * FROM shoes WHERE serialNumber = '" + number + "'");
+			reservePrice.next();
+			String reserve = reservePrice.getString("reserve");
+			int res = Integer.parseInt(reserve);
+			int fin = Integer.parseInt(finalCost);
 			
-			//alert the winner that they have won the auction
-			String alertWinner = "INSERT INTO alerts(username, serialNumber, price, alertType) " 
-					+ "VALUES (? , ? , ?, ?)";
-			
-			PreparedStatement ps3 = con.prepareStatement(insert2);
-			//add parameters to query
-			ps3.setString(1, winner);
-			ps3.setString(2, newNum);
-			ps3.setObject(3, number);
-			ps3.setString(4, "You have won the auction!");
-			ps3.executeUpdate();
-			
-			
-			//delete the auction from the shoes table
-			String deleteAuction = "DELETE FROM shoes WHERE serialNumber = '" + number + "'";
-			stmt.executeQuery(deleteAuction);
-			
-			
-    	}
-			
+			if (res<fin){
+				//alert the winner of the auction if the reserve price was met otherwise move on
+				String alertWinner = "INSERT INTO alerts(username, serialNumber, price, alertType) " 
+						+ "VALUES (? , ? , ?, ?)";
+				
+				PreparedStatement ps3 = con.prepareStatement(alertWinner);
+				//add parameters to query
+				ps3.setString(1, winner);
+				ps3.setString(2, number);
+				ps3.setObject(3, finalCost);
+				ps3.setString(4, "You have won the auction!");
+				ps3.executeUpdate();
+				
+				
+				//delete the auction from the shoes table
+				String deleteAuction = "DELETE FROM shoes WHERE serialNumber = '" + number + "'";
+				st.executeQuery(deleteAuction);
+			}
+		
 			
     }
     
