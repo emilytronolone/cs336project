@@ -54,7 +54,7 @@
 					<td><%= result.getString("demographic") %></td>
 					<td><%= result.getString("style") %></td>
 					<td>$<%= result.getString("biddingPrice") %></td>
-					<td><%= result.getString("end") %></td>
+					<td><%= result.getString("endi") %></td>
 				</tr>
 		<%	} while (result.next()); %> 
 			</table>
