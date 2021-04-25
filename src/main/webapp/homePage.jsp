@@ -30,3 +30,7 @@
 	<li><a href="createAuction.jsp">Create Auction</a></li>
 	<li><a href="alerts.jsp">Check Alerts</a></li>
 	<li><a href="bidOptions.jsp">Make A Bid</a></li>
+	<li><a href="auctionHistory.jsp"> Auction History</a> </li>
+	
+	</br>
+	<button onclick="document.location='logout.jsp'" type="button">Log Out</button>

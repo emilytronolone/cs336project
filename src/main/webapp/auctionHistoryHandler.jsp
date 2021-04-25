@@ -4,15 +4,16 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Search Results</title>
-</head>
-<body>
-    <% if(session.getAttribute("user") == null) { 
+	<head>
+		<meta charset="UTF-8">
+		<title>Auction History</title>
+	</head>
+	<body>
+
+	  <% if(session.getAttribute("user") == null) { 
     		response.sendRedirect("login.jsp");
        } else { %>
-       
-		<%	
+	<%	
 		List<String> list = new ArrayList<String>();
 		
 		try {
@@ -24,10 +25,10 @@
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
 			
-			String searchSize = request.getParameter("size");
+			String requestedSerialNum = request.getParameter("serialNum");
 			//String searchColor = request.getParameter("color");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			String str = "SELECT * FROM shoes"; 
+			String str = "SELECT * FROM bid WHERE serialNumber = " + requestedSerialNum; 
 			 
 		
 			
@@ -38,28 +39,18 @@
 			<h2>Search Results:</h2>
 			<table>
 				<tr>
-					<th>Item Number</th>
-					<th>Size</th>
-					<th>Color</th>
-					<th>Demographic</th>
-					<th>Style</th>
-					<th>Bidding Price</th>
-					<th>End Date/Time</th>
+					<th>Price</th>
+					<th>Username</th>
 				</tr>
 		<%	do { %>
 				<tr>
-					<td text-align: left> <%= result.getString("serialNumber") %> </td>
-					<td><%= result.getString("size") %></td>
-					<td><%= result.getString("color") %></td>
-					<td><%= result.getString("demographic") %></td>
-					<td><%= result.getString("style") %></td>
-					<td>$<%= result.getString("biddingPrice") %></td>
-					<td><%= result.getString("endi") %></td>
+					<td>$<%= result.getString("price") %> </td>
+					<td><%= result.getString("username") %></td>
 				</tr>
 		<%	} while (result.next()); %> 
 			</table>
 	<%	} else { %>
-			<h2>No results matching your search parameters.</h2>
+			<h2>No results matching your serial number.</h2>
 	<%	}
 			//close the connection.
 			con.close();
@@ -71,14 +62,11 @@
 		%>
 	
 	<% } %>
-	</br>
-	Don't see the item you want? Add it to your wish list! 
-	<br/>
-	<button onclick="document.location='wishlist.jsp'" type = "button">Add to Wish List</button>
-	
-	<br/>
-	<button onclick="document.location='homePage.jsp'" type = "button">Go to Home Page</button>
-</body>
+
+		</br>
+		<button onclick="document.location='homePage.jsp'" type="button">Back to Home</button>
 
 
+
+	</body>
 </html>
