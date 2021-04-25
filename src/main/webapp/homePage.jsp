@@ -10,7 +10,7 @@
 	<%
     if ((session.getAttribute("user") == null)) {
 	%>
-		You are not logged in<br/>
+		You are not logged in.<br/>
 	
 	<a href="login.jsp">Please Login</a>
 	
@@ -30,3 +30,7 @@
 	<li><a href="createAuction.jsp">Create Auction</a></li>
 	<li><a href="alerts.jsp">Check Alerts</a></li>
 	<li><a href="bidOptions.jsp">Make A Bid</a></li>
+	<li><a href="auctionHistory.jsp"> Auction History</a> </li>
+	
+	</br>
+	<button onclick="document.location='logout.jsp'" type="button">Log Out</button>

@@ -31,15 +31,52 @@
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 
-		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-		//ps.setString(1, "4");
-		ps.setString(1, newBid);
-		ps.setString(2, newNum);
-		ps.setObject(3, userID);
-		//Run the query against the DB
-		ps.executeUpdate();
-		//Run the query against the DB
+		ResultSet boo = stmt.executeQuery("SELECT * FROM bid WHERE username= '" + userID + "' AND serialNumber = '" + newNum + "'");
+		if (boo.next()) {
+			String update = "UPDATE bid SET price = ? WHERE username= '" + userID + "' AND serialNumber = '" + newNum + "'";
+			PreparedStatement ps2 = con.prepareStatement(update);
+			
+			//add parameters
+			ps2.setString(1, newBid);
+			ps2.executeUpdate();
+		} else {
+			//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
+			//ps.setString(1, "4");
+			ps.setString(1, newBid);
+			ps.setString(2, newNum);
+			ps.setObject(3, userID);
+			//Run the query against the DB
+			ps.executeUpdate();
+		}
 		
+		//check the bid table for lower bids  
+		String getLowerBids = "SELECT username FROM bid WHERE serialNumber = '" + newNum + "' AND price < '" + newBid + "'";
+		ResultSet lowBids = stmt.executeQuery(getLowerBids);
+				
+		// create alerts to let lower bidders know they've been outbid 
+		while(lowBids.next()){
+			String s = lowBids.getString("username");
+			String insert2 = "INSERT INTO alerts(username, serialNumber, price, alertType) " 
+			+ "VALUES (? , ? , ?, ?)";
+			PreparedStatement ps2 = con.prepareStatement(insert2);
+			//add parameters to query
+			ps2.setString(1, s);
+			ps2.setString(2, newNum);
+			ps2.setObject(3, newBid);
+			ps2.setString(4, "You have been outbid!");
+			ps2.executeUpdate();
+		}
+				
+		//check for other autobids against this item
+		ResultSet boo2 = stmt.executeQuery("SELECT * FROM bid WHERE username= '" + userID + "' AND serialNumber = '" + newNum + "'");
+		if (boo2.next()) {
+			String update = "UPDATE bid SET price = ? WHERE username= '" + userID + "' AND serialNumber = '" + newNum + "'";
+			PreparedStatement ps2 = con.prepareStatement(update);
+			
+			//add parameters
+			ps2.setString(1, newBid);
+			ps2.executeUpdate();
+		}
 		
 		//response.sendRedirect("login.jsp");
 

@@ -4,15 +4,16 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Alerts</title>
-</head>
-<body>
-    <% if(session.getAttribute("user") == null) { 
+	<head>
+		<meta charset="UTF-8">
+		<title>Auction History</title>
+	</head>
+	<body>
+
+	  <% if(session.getAttribute("user") == null) { 
     		response.sendRedirect("login.jsp");
        } else { %>
-       
-		<%	
+	<%	
 		List<String> list = new ArrayList<String>();
 		
 		try {
@@ -24,36 +25,32 @@
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
 			
-			//String searchSize = request.getParameter("size");
+			String requestedSerialNum = request.getParameter("serialNum");
 			//String searchColor = request.getParameter("color");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			Object userID = session.getAttribute("user");
-			String str = "SELECT * FROM alerts WHERE username= '" + userID + "'"; 
-			 
+			String str1 = "SELECT * FROM bid, autobid WHERE serialNumber = " + requestedSerialNum; 
+			
 		
 			
 			//Run the query against the database.
-			ResultSet result = stmt.executeQuery(str);
+			ResultSet result = stmt.executeQuery(str1);
 	
 			if (result.next()) { %>
-			<h2>Your alerts:</h2>
+			<h2>Search Results:</h2>
 			<table>
 				<tr>
-					<th>Serial Number</th>
-					<th>Shoe Price</th>
-					<th>Message</th>
-					
+					<th>Price</th>
+					<th>Username</th>
 				</tr>
 		<%	do { %>
 				<tr>
-					<td><%= result.getString("serialNumber") %></td>
-					<td>$<%= result.getString("price") %></td>
-					<td><%= result.getString("alertType") %></td>
+					<td>$<%= result.getString("price") %> </td>
+					<td><%= result.getString("username") %></td>
 				</tr>
 		<%	} while (result.next()); %> 
 			</table>
 	<%	} else { %>
-			<h2>No alerts.</h2>
+			<h2>No results matching your serial number.</h2>
 	<%	}
 			//close the connection.
 			con.close();
@@ -63,7 +60,14 @@
 		
 			
 		%>
-	
+		
+		
 	<% } %>
-</body>
+
+		</br>
+		<button onclick="document.location='homePage.jsp'" type="button">Back to Home</button>
+
+
+
+	</body>
 </html>
