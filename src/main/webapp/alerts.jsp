@@ -27,7 +27,8 @@
 			//String searchSize = request.getParameter("size");
 			//String searchColor = request.getParameter("color");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			String str = "SELECT * FROM alerts"; 
+			Object userID = session.getAttribute("user");
+			String str = "SELECT * FROM alerts WHERE username= '" + userID + "'"; 
 			 
 		
 			
