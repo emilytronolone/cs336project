@@ -12,12 +12,24 @@
     Statement st = con.createStatement();
     ResultSet rs;
     
+    
+    ResultSet now = st.executeQuery("SELECT NOW()");
+    String nowTime = now.toString();
+    
     //pull the data pertaining to the active auctions 
     rs = st.executeQuery("select * from shoes");
     while(rs.next()){
-    	String time = rs.getString("endi");
+    	String endauction = rs.getString("endi");
+    	String number = rs.getString("serialNumber");
     	
-    	
+    	//if the endauction time has passed
+    	if (endauction gt nowTime) {
+			//check to see who won the auction
+    		ResultSet boo = stmt.executeQuery("SELECT MAX * FROM bid WHERE serialNumber = '" + number + "'"); 
+			
+    	}
+			
+			
     }
     
     
