@@ -8,6 +8,6 @@
 	</head>
 	<body>
 		<li><a href="bidPage.jsp">Automatically Bid</a></li>
-		<li><a href="bidOptions.jsp">Manually Bid</a></li>
+		<li><a href="manualBid.jsp">Manually Bid</a></li>
 	</body>
 </html>
