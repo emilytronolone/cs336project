@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Create Auction</title>
+		<title>Manual Bidding</title>
 	</head>
 	<body>
 
@@ -21,29 +21,21 @@
 		//Create a SQL statement
 		Statement stmt = con.createStatement();
 
-		String newSize = request.getParameter("size");
-		String newColor = request.getParameter("color");
-		String newDemo = request.getParameter("demographic");
-		String newStyle = request.getParameter("style");
-		String newReserve = request.getParameter("reserve");
-		String newEndDate = request.getParameter("endi");
+		String newNum = request.getParameter("serialNum");
+		String newBid = request.getParameter("bid");
 		Object userID = session.getAttribute("user");
 		
 		//Make an insert statement for the accounts table:
-		String insert = "INSERT INTO shoes(biddingPrice, reserve, size, color, demographic, style, endi, seller)"
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO bid(price, serialNumber, username)"
+				+ "VALUES (?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 
 		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-		ps.setString(1, "0");
-		ps.setString(2, newReserve);
-		ps.setString(3, newSize);
-		ps.setString(4, newColor);
-		ps.setString(5, newDemo);
-		ps.setString(6, newStyle);
-		ps.setString(7, newEndDate);
-		ps.setObject(8, userID);
+		//ps.setString(1, "4");
+		ps.setString(1, newBid);
+		ps.setString(2, newNum);
+		ps.setObject(3, userID);
 		//Run the query against the DB
 		ps.executeUpdate();
 		//Run the query against the DB
@@ -52,7 +44,7 @@
 		//response.sendRedirect("login.jsp");
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
-		out.print("Item successfully posted!");
+		out.print("Bid successfully submitted!");
 		
 		
 	} catch (Exception ex) {

@@ -13,13 +13,17 @@
     
     Statement st = con.createStatement();
     ResultSet rs;
+  
     rs = st.executeQuery("select * from account where username='" + userid + "' and password='" + pwd+ "'and type='" + accType + "' ");
+    
     if (rs.next()) {
         session.setAttribute("user", userid); // the username will be stored in the session
         out.println("welcome " + userid);
         out.println("<a href='logout.jsp'>Log out</a>");
         response.sendRedirect("success.jsp");
-    } else {
+    }
+
+    	else {
         out.println("Invalid password <a href='login.jsp'>try again</a>");
     }
 %>

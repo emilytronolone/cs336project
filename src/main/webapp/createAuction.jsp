@@ -73,8 +73,8 @@
   				<label for="reserve">Reserve Price:</label><br>
   				<input type="number" id="reserve" name="reserve" step=".01"><br>
   			
-  			<!--<label for="end">Auction End:</label><br>-->
-  			<!--<input type="date" id="end" name="end"><br>-->
+  				<label for="endi">Auction End:</label><br>
+  				<input type="datetime-local" id="endi" name="endi"><br>
   		
   			<input type="submit" value="Post">
 		</form>

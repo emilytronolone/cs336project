@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Search Results</title>
+    <title>Alerts</title>
 </head>
 <body>
     <% if(session.getAttribute("user") == null) { 
@@ -27,7 +27,7 @@
 			String searchSize = request.getParameter("size");
 			//String searchColor = request.getParameter("color");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			String str = "SELECT * FROM shoes WHERE size = " + searchSize; 
+			String str = "SELECT * FROM alerts"; 
 			 
 		
 			
@@ -38,7 +38,7 @@
 			<h2>Search Results:</h2>
 			<table>
 				<tr>
-					<th>Item Number</th>
+					<th>Item</th>
 					<th>Size</th>
 					<th>Color</th>
 					<th>Demographic</th>
@@ -48,7 +48,7 @@
 				</tr>
 		<%	do { %>
 				<tr>
-					<td> <%= result.getString("serialNumber") %> </td>
+					<td text-align: left> <%= result.getString("serialNumber") %> </td>
 					<td><%= result.getString("size") %></td>
 					<td><%= result.getString("color") %></td>
 					<td><%= result.getString("demographic") %></td>
@@ -71,12 +71,5 @@
 		%>
 	
 	<% } %>
-	Don't see the item you want? Add it to your wish list! 
-	<br/>
-	<button onclick="document.location='wishlist.jsp'" type = "button">Add to Wish List</button>
-	
-	<br/>
-	<button onclick="document.location='homePage.jsp'" type = "button">Go to Home Page</button>
-	
 </body>
 </html>
