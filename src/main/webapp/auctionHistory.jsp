@@ -9,7 +9,7 @@
 <body>
 <h2>Auction History</h2>
 
-Submit the Serial Number of the shoe you would like to see the history for:
+Submit the Serial Number of the item you would like to see the history for:
 
 		<form action="auctionHistoryHandler.jsp" method="POST">
 			<label for="serialNum">Serial Number:</label><br>

@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
-<!--Import some libraries that have classes that we need -->
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*,java.text.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+<%@ page import="com.cs336.pkg.*"  %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,6 +10,9 @@
 	</head>
 	<body>
 
+	  <% if(session.getAttribute("user") == null) { 
+    		response.sendRedirect("login.jsp");
+       } else { %>
 	<%	
 		List<String> list = new ArrayList<String>();
 		
@@ -61,7 +63,7 @@
 	
 	<% } %>
 
-
+		</br>
 		<button onclick="document.location='homePage.jsp'" type="button">Back to Home</button>
 
 
