@@ -42,9 +42,7 @@
 		
 		
 		//response.sendRedirect("login.jsp");
-		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
-		con.close();
-		out.print("Bid successfully submitted!");
+
 		
 		
 		//check for autobids
@@ -65,6 +63,14 @@
 				//add parameters
 				ps2.setString(1, newBid);
 				ps2.executeUpdate();
+				
+				
+				
+				String updateauto = "UPDATE autobid SET currBid = ? WHERE username= '" + user + "' AND serialNumber = '" + newNum + "'";
+				PreparedStatement ps4 = con.prepareStatement(update);
+				//add parameters
+				ps4.setString(1, newBid);
+				ps4.executeUpdate();
 				
 				
 				//check the bid table for lower bids  
@@ -89,7 +95,9 @@
 		}
 	
 
-		
+		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
+		con.close();
+		out.print("Bid successfully submitted!");
 		
 		//notify them if there are any bids higher than theirs now
 		
