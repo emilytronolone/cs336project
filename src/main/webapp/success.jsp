@@ -19,6 +19,9 @@
 	%> 
 	<br/>
 	<button onclick="document.location='homePage.jsp'" type = "button">Go to Home Page</button>
+	<button onclick="document.location='admin.jsp'" type="button">Admin</button>
+	<button onclick="document.location='cusotmerRep.jsp'" type="button">Customer Representative</button>
 	<button onclick="document.location='logout.jsp'" type="button">Log Out</button>
+	
 
 	
