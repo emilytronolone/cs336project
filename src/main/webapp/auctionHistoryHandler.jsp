@@ -28,7 +28,7 @@
 			String requestedSerialNum = request.getParameter("serialNum");
 			//String searchColor = request.getParameter("color");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			String str1 = "SELECT * FROM bid, autobid WHERE serialNumber = " + requestedSerialNum; 
+			String str1 = "SELECT * FROM bid WHERE serialNumber = " + requestedSerialNum; 
 			
 		
 			
@@ -54,7 +54,6 @@
 	<%	}
 			//close the connection.
 			con.close();
-
 		} catch (Exception e) {
 		}
 		
